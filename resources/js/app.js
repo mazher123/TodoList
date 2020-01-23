@@ -29,6 +29,11 @@ Vue.component('todo-main-component', require('./components/TodoMainPage.vue').de
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import store from './store/TodoStore.js';
+
+
+
 const app = new Vue({
     el: '#app',
+    store
 });
