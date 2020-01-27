@@ -9,7 +9,7 @@
     <Section id="app" class="container">
 
 
-        <div class=" mt-5 ml-5">
+        <div class="row mt-5">
 
             <todo-main-component></todo-main-component>
         </div>

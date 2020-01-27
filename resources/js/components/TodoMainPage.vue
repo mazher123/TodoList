@@ -10,13 +10,27 @@
                     placeholder="What are you trying to get done?"
                     class="new-todo"
                 />
+
+                <TodoList
+                    v-for="todo in todoData"
+                    :key="todo.id"
+                    :todo="todo"
+                ></TodoList>
+                <Footer v-show="todoData.length"></Footer>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import TodoList from "./TodoList";
+import Footer from "./Footer";
+
 export default {
+    components: {
+        TodoList,
+        Footer
+    },
     data() {
         return {
             todoTittle: ""
@@ -27,15 +41,28 @@ export default {
         console.log("Component mounted.");
     },
 
-    computed: {},
+    created() {
+        this.$store.dispatch("loadTodo");
+    },
+
+    computed: {
+        todoData() {
+            return this.$store.getters.todoData;
+        }
+    },
 
     methods: {
         insertList() {
             console.log("am inside");
-        
-            this.$store.commit("addTodo", {
+
+            if (this.todoTittle == "") {
+                return;
+            }
+
+            this.$store.dispatch("addTodo", {
                 title: this.todoTittle
             });
+            this.todoTittle = "";
         }
     }
 };
