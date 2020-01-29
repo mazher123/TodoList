@@ -1,22 +1,37 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <span class="todo-count">
-                    <strong></strong>
-                    left
-                </span>
-                <ul class="filters">
+            <div class="col-md-12">
+                <ul class="col-md-8 justify-content-center">
                     <li>
-                        <a>All</a>
+                        <span class="todo-count">
+                            <strong>{{ countItem }} remaining Items</strong>
+                        </span>
                     </li>
                     <li>
-                        <a>Active</a>
+                        <button @click="fetchAll()">
+                            All
+                        </button>
+                    </li>
+                    <li>
+                        <button @click="fetchActive()">
+                            Active
+                        </button>
+                    </li>
+                    <li>
+                        <button @click="fetchCompleted()">
+                            Completed
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            v-show="markedCompleted.length"
+                            @click="clearCompleted()"
+                        >
+                            Clear completed
+                        </button>
                     </li>
                 </ul>
-                <button class="clear-completed">
-                    Clear completed
-                </button>
             </div>
         </div>
     </div>
@@ -24,9 +39,53 @@
 
 <script>
 export default {
-    computed: {},
+    computed: {
+        markedCompleted() {
+            return this.$store.getters.markedCompleted;
+        },
+        countItem() {
+            return this.$store.getters.countItem;
+        }
+    },
     mounted() {
         console.log("Component mounted.");
+    },
+
+    methods: {
+        fetchAll() {
+            this.$store.dispatch("fetchAll");
+        },
+        fetchActive() {
+            this.$store.dispatch("fetchActive");
+        },
+        fetchCompleted() {
+            this.$store.dispatch("fetchCompleted");
+        },
+
+        clearCompleted() {
+            this.$store.dispatch("clearCompleted");
+            this.$store.state.filter = "all";
+        }
     }
 };
 </script>
+
+<style scoped>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    padding: 8px;
+    margin: 5px;
+    background-color: #dddddd;
+}
+</style>

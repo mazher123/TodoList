@@ -18,5 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/todo-List','TodoController@loadTodoList');
-Route::post('/todo-List','TodoController@addTodo');
+Route::get('/todo-List', 'TodoController@loadTodoList');
+Route::post('/todo-List', 'TodoController@addTodo');
+
+Route::delete('/todo-List/{id}', 'TodoController@removeTodo');
+Route::get('/todo-List/active', 'TodoController@fetchActive');
+
+Route::get('/todo-List/completed', 'TodoController@fetchCompleted');
+Route::put('/todo-List/completed/{id}', 'TodoController@markCompleted');
+
+Route::put('/todo-List/update-list/{id}', 'TodoController@updateTitle');
+Route::post('/todo-List/clear-completed', 'TodoController@ClearCompleted');
